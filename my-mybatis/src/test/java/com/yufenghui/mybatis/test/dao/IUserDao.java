@@ -1,5 +1,7 @@
 package com.yufenghui.mybatis.test.dao;
 
+import com.yufenghui.mybatis.test.po.User;
+
 /**
  * IUserDao
  * <p/>
@@ -10,6 +12,6 @@ package com.yufenghui.mybatis.test.dao;
 public interface IUserDao {
 
 
-    String queryUserInfoById(String uId);
+    User queryUserInfoById(String uId);
 
 }

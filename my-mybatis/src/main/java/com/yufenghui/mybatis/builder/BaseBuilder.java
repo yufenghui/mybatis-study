@@ -1,6 +1,7 @@
 package com.yufenghui.mybatis.builder;
 
 import com.yufenghui.mybatis.session.Configuration;
+import com.yufenghui.mybatis.type.TypeAliasRegistry;
 
 /**
  * 基类 构建器
@@ -13,8 +14,11 @@ public abstract class BaseBuilder {
 
     protected final Configuration configuration;
 
+    protected final TypeAliasRegistry typeAliasRegistry;
+
     public BaseBuilder(Configuration configuration) {
         this.configuration = configuration;
+        this.typeAliasRegistry = configuration.getTypeAliasRegistry();
     }
 
 }

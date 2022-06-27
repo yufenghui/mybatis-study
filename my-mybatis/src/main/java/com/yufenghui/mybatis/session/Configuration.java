@@ -1,7 +1,11 @@
 package com.yufenghui.mybatis.session;
 
 import com.yufenghui.mybatis.binding.MapperRegistry;
+import com.yufenghui.mybatis.datasource.druid.DruidDataSourceFactory;
+import com.yufenghui.mybatis.mapping.Environment;
 import com.yufenghui.mybatis.mapping.MappedStatement;
+import com.yufenghui.mybatis.transaction.jdbc.JdbcTransactionFactory;
+import com.yufenghui.mybatis.type.TypeAliasRegistry;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,7 +21,12 @@ import java.util.Map;
 public class Configuration {
 
     /**
-     * 映射注册机
+     * 环境
+     */
+    private Environment environment;
+
+    /**
+     * 映射注册器
      */
     private MapperRegistry mapperRegistry = new MapperRegistry(this);
 
@@ -25,6 +34,19 @@ public class Configuration {
      * mapper方法映射的statement语句
      */
     private final Map<String, MappedStatement> mappedStatements = new HashMap<>();
+
+    /**
+     * 类型别名注册器
+     */
+    private TypeAliasRegistry typeAliasRegistry = new TypeAliasRegistry();
+
+
+    public Configuration() {
+
+        typeAliasRegistry.registerAlias("JDBC", JdbcTransactionFactory.class);
+        typeAliasRegistry.registerAlias("DRUID", DruidDataSourceFactory.class);
+
+    }
 
 
     public <T> boolean hasMapper(Class<T> type) {
@@ -49,6 +71,26 @@ public class Configuration {
 
     public MappedStatement getMappedStatement(String id) {
         return mappedStatements.get(id);
+    }
+
+    public MapperRegistry getMapperRegistry() {
+        return mapperRegistry;
+    }
+
+    public Map<String, MappedStatement> getMappedStatements() {
+        return mappedStatements;
+    }
+
+    public TypeAliasRegistry getTypeAliasRegistry() {
+        return typeAliasRegistry;
+    }
+
+    public Environment getEnvironment() {
+        return environment;
+    }
+
+    public void setEnvironment(Environment environment) {
+        this.environment = environment;
     }
 
 }
